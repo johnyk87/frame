@@ -1,0 +1,47 @@
+<application version="0">
+  
+  <!-- class definitions -->
+  
+  <classes>
+    <!-- events -->
+	<!-- classes declared in this section must inherit from jk.frame.events.FrameEvent or one of its descendants -->
+	<events>
+	  <classdef id="any" name="jk.frame.FrameEvent"/>
+	  <classdef id="exception" name="jk.frame.events.ExceptionEvent"/>
+	  <classdef id="custom" name="jk.test.CustomEvent"/>
+	</events>
+    <!-- modules -->
+	<!-- classes declared in this section must inherit from jk.frame.modules.FrameModule -->
+	<modules>
+	  <classdef id="module1" name="jk.test.CustomEventModule"/>
+	  <classdef id="module2" name="jk.test.EventLoggerModule"/>
+	</modules>
+  </classes>
+  
+  <!-- mappings -->
+  
+  <mappings>
+    <event classid="any">
+		<handler module="module2"/>
+	</event>
+    <event classid="custom">
+		<handler module="module1"/>
+	</event>
+  </mappings>
+
+  <!-- properties -->
+  
+  <properties>
+    <global>
+	  <!-- required attributes: name, value -->
+      <property name="appProperty1" value="value1"/>
+      <property name="appProperty2" value="value2"/>
+	</global>
+	<!-- required attribute: classid -->
+	<module classid="module1">
+      <property name="mod1Property1" value="value1"/>
+      <property name="mod1Property2" value="value2"/>
+    </module>
+  </properties>
+  
+</application>

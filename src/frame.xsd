@@ -1,0 +1,81 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Classes -->
+	
+	<xs:complexType name="classDefinition">
+      <xs:attribute name="id" type="xs:string" />
+      <xs:attribute name="name" type="xs:string" use="required" />
+    </xs:complexType>
+  
+    <xs:complexType name="classDefinitions">
+      <xs:sequence>
+        <xs:element name="classdef" type="classDefinition" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  
+    <xs:complexType name="classes">
+      <xs:all>
+        <xs:element name="events" type="classDefinitions" minOccurs="0" maxOccurs="1" />
+        <xs:element name="modules" type="classDefinitions" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+    </xs:complexType>
+
+    <!-- Mappings -->
+  
+    <xs:complexType name="moduleMapping">
+      <xs:attribute name="module" type="xs:string" use="required" />
+    </xs:complexType>
+  
+    <xs:complexType name="handlerMappings">
+      <xs:sequence>
+        <xs:element name="handler" type="moduleMapping" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="classid" type="xs:string" use="required" />
+    </xs:complexType>
+  
+    <xs:complexType name="mappings">
+      <xs:sequence>
+        <xs:element name="event" type="handlerMappings" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+
+    <!-- Properties -->
+  
+    <xs:complexType name="property">
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="value" type="xs:string" use="required" />
+    </xs:complexType>
+		
+	<xs:complexType name="globalProperties">
+	  <xs:sequence>
+		<xs:element name="property" type="property" minOccurs="0" maxOccurs="unbounded" />
+	  </xs:sequence>
+	</xs:complexType>
+		
+	<xs:complexType name="moduleProperties">
+	  <xs:sequence>
+		<xs:element name="property" type="property" minOccurs="0" maxOccurs="unbounded" />
+	  </xs:sequence>
+      <xs:attribute name="classid" type="xs:string" use="required" />
+	</xs:complexType>
+		
+	<xs:complexType name="properties">
+	  <xs:sequence>
+		<xs:element name="global" type="globalProperties" minOccurs="0" maxOccurs="1" />
+		<xs:element name="module" type="moduleProperties" minOccurs="0" maxOccurs="unbounded" />
+	  </xs:sequence>
+	</xs:complexType>
+
+    <!-- Application -->
+  
+    <xs:complexType name="applicationConfig">
+      <xs:all>
+        <xs:element name="classes" type="classes" minOccurs="0" maxOccurs="1" />
+        <xs:element name="mappings" type="mappings" minOccurs="0" maxOccurs="1" />
+        <xs:element name="properties" type="properties" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+      <xs:attribute name="version" type="xs:string" />
+    </xs:complexType>
+    <xs:element name="application" type="applicationConfig" />
+  
+</xs:schema>
